@@ -1,0 +1,18 @@
+//////RUN MYSQL CONTAINER/////////////
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=todo -d -p 3306:3306 mysql:latest
+
+////CONNECT TO MYSQL DOCKER CONTAINER CLI///////
+docker exec -it mysql bash -l
+
+/////ATTACH TO CONTAINER/////////////////
+docker attach --sig-proxy=false <container name>
+
+////WRITE/READ ENVIROMENT VARIABLES////////
+export DBDRIVER=mysql
+export DBIPADDRESS=localhost
+export DBPORT=3306
+export DBUSER=root
+export DBPASSWORD=root
+
+///////DOCKER ATTACH//////////////
+ docker attach --sig-proxy=false  <CONTAINER NAME>

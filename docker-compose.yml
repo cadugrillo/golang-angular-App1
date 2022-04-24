@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  angular:
+    image: cadugrillo/angular-app1:1.1
+    container_name: angular
+    ports:
+      - 80:80
+
+  golang:
+    image: cadugrillo/golang-app1:1.2
+    container_name: golang
+    ports:
+      - 4300:4300
+    environment:
+      - DBDRIVER=mysql
+      - DBIPADDRESS=mysql
+      - DBPORT=3306
+      - DBUSER=root
+      - DBPASSWORD=root
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=todo
+   
+

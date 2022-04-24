@@ -1,0 +1,19 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="https://github.com/cadugrillo/golang-angular-App1">My First Golang-Angular Project</a>
+      <button class="btn btn-light btn-margin" routerLink="/home" routerLinkActive="active" *ngIf="isAuthenticated"> Home </button>
+      <button class="btn btn-light btn-margin" routerLink="/signIn" routerLinkActive="active" *ngIf="!isAuthenticated"> Sign in </button>
+      <button class="btn btn-light btn-margin" routerLink="/signUp" routerLinkActive="active" *ngIf="!isAuthenticated"> Sign up </button>
+      <button class="btn btn-light btn-margin" routerLink="/profile" routerLinkActive="active" *ngIf="isAuthenticated"> Profile </button>
+      <button class="btn btn-light btn-margin" routerLink="" (click)="signOut()" *ngIf="isAuthenticated"> Sign out </button>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+<div class="row">
+  <div class="col-sm">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+</div>
