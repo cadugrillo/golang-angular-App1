@@ -13,6 +13,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { TodoService } from './todo.service';
 import { FormsModule } from '@angular/forms';
 import { TokenInterceptor } from './token.interceptor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { TokenInterceptor } from './token.interceptor';
     AppRoutingModule,
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [TodoService, {
     provide: HTTP_INTERCEPTORS,
