@@ -16,3 +16,5 @@ export DBPASSWORD=root
 
 ///////DOCKER ATTACH//////////////
  docker attach --sig-proxy=false  <CONTAINER NAME>
+
+ this.cognitoService.getUserEmail().then(console.log)
