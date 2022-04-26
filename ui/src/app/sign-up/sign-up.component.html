@@ -13,9 +13,6 @@
             <label for="password" class="form-label">Password:</label>
             <div class="input-group input-group-sm">
               <input [type]="user.showPassword ? 'text' : 'password'" id="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control form-control-sm">
-              <button type="button" class="btn btn-outline-secondary" (click)="user.showPassword = !user.showPassword">
-                <i class="bi" [ngClass]="{'bi-eye-fill': !user.showPassword, 'bi-eye-slash-fill': user.showPassword}"></i>
-              </button>
             </div>
           </div>
         </div>
@@ -26,6 +23,13 @@
               Sign up
             </button>
           </div>
+        </div>
+        <div id="message">
+          <h6>Password must contain the following:</h6>
+          <p id="letter" class="valid">A <b>lowercase</b> letter</p>
+          <p id="capital" class="valid">A <b>capital (uppercase)</b> letter</p>
+          <p id="number" class="valid">A <b>number</b></p>
+          <p id="length" class="valid">Minimum <b>8 characters</b></p>
         </div>
       </div>
       <div class="card-body" *ngIf="isConfirm">
