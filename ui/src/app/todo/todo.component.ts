@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService, Todo } from '../todo.service';
+import { CognitoService } from '../cognito.service';
 
 @Component({
   selector: 'app-todo',
@@ -11,16 +12,20 @@ export class TodoComponent implements OnInit {
   activeTodos: Todo[] = [];
   completedTodos: Todo[] = [];
   todoMessage!: string;
-  
+  userEmail!: string;
 
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService,
+              private cognitoService: CognitoService) { }
 
   ngOnInit() {
-    this.getAll();
+    this.cognitoService.getUserEmail().then((userEmail: string) => {
+      this.userEmail = userEmail;
+      this.getAll();
+    });
   }
 
   getAll() {
-    this.todoService.getTodoList().subscribe((data) => {
+    this.todoService.getTodoList(this.userEmail).subscribe((data) => {
       this.activeTodos = (data as Todo[]).filter((a) => !a.complete);
       this.completedTodos = (data as Todo[]).filter((a) => a.complete);
     });
@@ -33,20 +38,20 @@ export class TodoComponent implements OnInit {
       complete: false
     };
 
-    this.todoService.addTodo(newTodo).subscribe(() => {
+    this.todoService.addTodo(this.userEmail, newTodo).subscribe(() => {
       this.getAll();
       this.todoMessage = '';
     });
   }
 
   completeTodo(todo: Todo) {
-    this.todoService.completeTodo(todo).subscribe(() => {
+    this.todoService.completeTodo(this.userEmail, todo).subscribe(() => {
       this.getAll();
     });
   }
 
   deleteTodo(todo: Todo) {
-    this.todoService.deleteTodo(todo).subscribe(() => {
+    this.todoService.deleteTodo(this.userEmail, todo).subscribe(() => {
       this.getAll();
     })
   }

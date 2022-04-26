@@ -6,20 +6,20 @@ import { environment } from '../environments/environment';
 export class TodoService {
   constructor(private httpClient: HttpClient) {}
 
-  getTodoList() {
-    return this.httpClient.get(environment.gateway + '/todo');
+  getTodoList(userEmail: string) {
+    return this.httpClient.get(environment.gateway + '/todo/' + userEmail);
   }
 
-  addTodo(todo: Todo) {
-    return this.httpClient.post(environment.gateway + '/todo', todo);
+  addTodo(userEmail: string, todo: Todo) {
+    return this.httpClient.post(environment.gateway + '/todo/' + userEmail, todo);
   }
 
-  completeTodo(todo: Todo) {
-    return this.httpClient.put(environment.gateway + '/todo', todo);
+  completeTodo(userEmail: string, todo: Todo) {
+    return this.httpClient.put(environment.gateway + '/todo/' + userEmail, todo);
   }
 
-  deleteTodo(todo: Todo) {
-    return this.httpClient.delete(environment.gateway + '/todo/' + todo.id);
+  deleteTodo(userEmail: string, todo: Todo) {
+    return this.httpClient.delete(environment.gateway + '/todo/'+ userEmail + '/' + todo.id);
   }
 }
 
