@@ -27,59 +27,50 @@ func initialiseList() {
 }
 
 // Get retrieves all elements from the todo list
-func Get() []dbdriver.Todo {
-
-	if once2 {
-		extDBexists = dbdriver.InitialiseDB()
-		once2 = false
-	}
+func Get(userId string) []dbdriver.Todo {
 
 	var dblist = []dbdriver.Todo{}
-	if extDBexists {
-		dblist = append(dblist, dbdriver.DatabaseGet()...)
-		println(dblist)
-		println(list)
-		return dblist
-	}
-	return list
+	dblist = append(dblist, dbdriver.DatabaseGet(userId)...)
+	return dblist
+
 }
 
 // Add will add a new todo based on a message
-func Add(message string) string {
+func Add(userId string, message string) string {
 	t := newTodo(message)
 	mtx.Lock()
-	list = append(list, t)
-	if extDBexists {
-		dbdriver.DatabaseAdd(t.ID, t.Message, t.Complete)
-	}
+	//list = append(list, t)
+	//if extDBexists {
+	dbdriver.DatabaseAdd(userId, t.ID, t.Message, t.Complete)
+	//}
 	mtx.Unlock()
 	return t.ID
 }
 
 // Delete will remove a Todo from the Todo list
-func Delete(id string) error {
-	location, err := findTodoLocation(id)
-	if err != nil {
-		return err
-	}
-	removeElementByLocation(location)
-	if extDBexists {
-		dbdriver.DatabaseDelete(id)
-	}
+func Delete(userId string, id string) error {
+	//location, err := findTodoLocation(id)
+	//if err != nil {
+	//	return err
+	//}
+	//removeElementByLocation(location)
+	//if extDBexists {
+	dbdriver.DatabaseDelete(userId, id)
+	//}
 	return nil
 }
 
 // Complete will set the complete boolean to true, marking a todo as
 // completed
-func Complete(id string) error {
-	location, err := findTodoLocation(id)
-	if err != nil {
-		return err
-	}
-	setTodoCompleteByLocation(location)
-	if extDBexists {
-		dbdriver.DatabaseComplete(id)
-	}
+func Complete(userId string, id string) error {
+	//location, err := findTodoLocation(id)
+	//if err != nil {
+	//	return err
+	//}
+	//setTodoCompleteByLocation(location)
+	//if extDBexists {
+	dbdriver.DatabaseComplete(userId, id)
+	//}
 	return nil
 }
 

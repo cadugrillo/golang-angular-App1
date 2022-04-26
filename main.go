@@ -23,10 +23,10 @@ func main() {
 		}
 	})
 
-	r.GET("/todo", handlers.GetTodoListHandler)
-	r.POST("/todo", handlers.AddTodoHandler)
-	r.DELETE("/todo/:id", handlers.DeleteTodoHandler)
-	r.PUT("/todo", handlers.CompleteTodoHandler)
+	r.GET("/todo/:userId", handlers.GetTodoListHandler)
+	r.POST("/todo/:userId", handlers.AddTodoHandler)
+	r.DELETE("/todo/:userId/:id", handlers.DeleteTodoHandler)
+	r.PUT("/todo/:userId", handlers.CompleteTodoHandler)
 
 	httpPort := os.Getenv("HTTP_PORT")
 	if httpPort == "" {

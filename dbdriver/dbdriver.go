@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"strings"
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -28,13 +29,13 @@ type Todo struct {
 	Complete bool   `json:"complete"`
 }
 
-func dbConn(dbname string) (db *sql.DB) {
+func dbConn() (db *sql.DB) {
 	dbIpaddr := os.Getenv("DBIPADDRESS")
 	dbPort := os.Getenv("DBPORT")
 	dbDriver := os.Getenv("DBDRIVER")
 	dbUser := os.Getenv("DBUSER")
 	dbPass := os.Getenv("DBPASSWORD")
-	dbName := dbname
+	dbName := "todo"
 	db, err := sql.Open(dbDriver, dbUser+":"+dbPass+"@tcp("+dbIpaddr+":"+dbPort+")/"+dbName)
 	if err != nil {
 		panic(err.Error())
@@ -46,40 +47,55 @@ func dbConn(dbname string) (db *sql.DB) {
 
 func InitialiseDB() bool {
 
-	dbDriver := os.Getenv("DBDRIVER")
-	if dbDriver == "" {
-		log.Println("No DB Driver was found. System will use Default storage method")
-		return false
-	}
+	//dbDriver := os.Getenv("DBDRIVER")
+	//if dbDriver == "" {
+	//	log.Println("No DB Driver was found. System will use Default storage method")
+	//	return false
+	//}
 
-	myDBinit := dbConn("")
+	//myDBinit := dbConn("")
 
-	AddDB, err := myDBinit.Prepare("CREATE DATABASE IF NOT EXISTS todo")
-	if err != nil {
-		panic(err.Error())
-	}
-	AddDB.Exec()
-	log.Println("Database todo created successfully")
-	myDBinit.Close()
+	//AddDB, err := myDBinit.Prepare("CREATE DATABASE IF NOT EXISTS todo")
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//AddDB.Exec()
+	//log.Println("Database todo created successfully")
+	//myDBinit.Close()
 
-	myDB := dbConn("todo")
-	addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS todo_items (ID varchar(36), Message varchar(255), Complete boolean)")
+	//mail := "cadugrillo@gmail.com"
+	//mailIdint := strings.Replace(mail, "@", "_", 1)
+	//mailId := strings.Replace(mailIdint, ".", "_", 1)
+
+	//myDB := dbConn("todo")
+	//addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + mailId + " (ID varchar(36), Message varchar(255), Complete boolean)")
+	//if err != nil {
+	//	panic(err.Error())
+	//}
+	//addTable.Exec()
+	//log.Println("Table todo_items created successfully")
+
+	//myDB.Close()
+
+	return false
+}
+
+func DatabaseGet(userId string) []Todo {
+	var todos []Todo
+	db := dbConn()
+
+	mailIdint := strings.Replace(userId, "@", "_", 1)
+	mailId := strings.Replace(mailIdint, ".", "_", 1)
+
+	myDB := dbConn()
+	addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + mailId + " (ID varchar(36), Message varchar(255), Complete boolean)")
 	if err != nil {
 		panic(err.Error())
 	}
 	addTable.Exec()
-	log.Println("Table todo_items created successfully")
+	log.Println("Table " + mailId + " created successfully")
 
-	myDB.Close()
-
-	return true
-}
-
-func DatabaseGet() []Todo {
-	var todos []Todo
-	db := dbConn("todo")
-
-	rows, err := db.Query("SELECT * FROM todo_items")
+	rows, err := db.Query("SELECT * FROM " + mailId)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -95,11 +111,14 @@ func DatabaseGet() []Todo {
 
 }
 
-func DatabaseAdd(ID string, Message string, Complete bool) {
+func DatabaseAdd(userId string, ID string, Message string, Complete bool) {
 
-	db := dbConn("todo")
+	db := dbConn()
 
-	r, err := db.Prepare("INSERT INTO todo_items(ID, Message, Complete) VALUES(?, ?, ?)")
+	mailIdint := strings.Replace(userId, "@", "_", 1)
+	mailId := strings.Replace(mailIdint, ".", "_", 1)
+
+	r, err := db.Prepare("INSERT INTO " + mailId + "(ID, Message, Complete) VALUES(?, ?, ?)")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -108,28 +127,34 @@ func DatabaseAdd(ID string, Message string, Complete bool) {
 	log.Println("New item created successfully")
 }
 
-func DatabaseComplete(ID string) {
+func DatabaseComplete(userId string, ID string) {
 
-	db := dbConn("todo")
+	db := dbConn()
 
-	r, err := db.Prepare("UPDATE todo_items SET Complete=true WHERE ID=?")
+	mailIdint := strings.Replace(userId, "@", "_", 1)
+	mailId := strings.Replace(mailIdint, ".", "_", 1)
+
+	r, err := db.Prepare("UPDATE " + mailId + " SET Complete=true WHERE ID=?")
 	if err != nil {
 		panic(err.Error())
 	}
 	r.Exec(ID)
 	db.Close()
-	log.Println("Item" + ID + "status completed set successfully")
+	log.Println("Item" + ID + "from " + mailId + " set to completed status")
 }
 
-func DatabaseDelete(ID string) {
+func DatabaseDelete(userId string, ID string) {
 
-	db := dbConn("todo")
+	db := dbConn()
 
-	r, err := db.Prepare("DELETE FROM todo_items WHERE ID=?")
+	mailIdint := strings.Replace(userId, "@", "_", 1)
+	mailId := strings.Replace(mailIdint, ".", "_", 1)
+
+	r, err := db.Prepare("DELETE FROM " + mailId + " WHERE ID=?")
 	if err != nil {
 		panic(err.Error())
 	}
 	r.Exec(ID)
 	db.Close()
-	log.Println("Item " + ID + " removed successfully")
+	log.Println("Item " + ID + " from " + mailId + " removed successfully")
 }

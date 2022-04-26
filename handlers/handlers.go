@@ -14,23 +14,26 @@ import (
 
 // GetTodoListHandler returns all current todo items
 func GetTodoListHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, todo.Get())
+	userID := c.Param("userId")
+	c.JSON(http.StatusOK, todo.Get(userID))
 }
 
 // AddTodoHandler adds a new todo to the todo list
 func AddTodoHandler(c *gin.Context) {
+	userID := c.Param("userId")
 	todoItem, statusCode, err := convertHTTPBodyToTodo(c.Request.Body)
 	if err != nil {
 		c.JSON(statusCode, err)
 		return
 	}
-	c.JSON(statusCode, gin.H{"id": todo.Add(todoItem.Message)})
+	c.JSON(statusCode, gin.H{"id": todo.Add(userID, todoItem.Message)})
 }
 
 // DeleteTodoHandler will delete a specified todo based on user http input
 func DeleteTodoHandler(c *gin.Context) {
+	userID := c.Param("userId")
 	todoID := c.Param("id")
-	if err := todo.Delete(todoID); err != nil {
+	if err := todo.Delete(userID, todoID); err != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
@@ -39,12 +42,13 @@ func DeleteTodoHandler(c *gin.Context) {
 
 // CompleteTodoHandler will complete a specified todo based on user http input
 func CompleteTodoHandler(c *gin.Context) {
+	userID := c.Param("userId")
 	todoItem, statusCode, err := convertHTTPBodyToTodo(c.Request.Body)
 	if err != nil {
 		c.JSON(statusCode, err)
 		return
 	}
-	if todo.Complete(todoItem.ID) != nil {
+	if todo.Complete(userID, todoItem.ID) != nil {
 		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
