@@ -1,7 +1,7 @@
 <h1>What is Golang-Angular-App1?</h1>
 
-This Web App is part of a series of small projects being created during my quest to learn new skills in the modern software development world.  
-It is written mostly using:
+This Web App is part of a series of small projects being created during my quest to learn new skills in the modern software development world. It is written mostly using:
+
 - Golang (or Go) programming language. You can find more info at https://go.dev/.
 - Angular framework. You can find more info at https://angular.io/.
 
@@ -22,7 +22,7 @@ It is written mostly using:
 
 <h1>Where can I find the source code?</h1>
 
-You can fork the git repository using https://github.com/cadugrillo/golang-angular-App1.git  
+You can fork this git repository. 
 
 <h1>How to deploy ?</h1>
 
