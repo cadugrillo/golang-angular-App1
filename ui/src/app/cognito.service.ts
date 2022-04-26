@@ -73,6 +73,11 @@ export class CognitoService {
     return Auth.currentUserInfo();
   }
 
+  public async getUserEmail(): Promise<string> {
+    const { attributes } = await Auth.currentAuthenticatedUser();
+    return attributes.email;
+  }
+
   public updateUser(user: IUser): Promise<any> {
     return Auth.currentUserPoolUser()
     .then((cognitoUser: any) => {
