@@ -8,10 +8,10 @@ docker exec -it mysql bash -l
 docker attach --sig-proxy=false <container name>
 
 ////WRITE/READ ENVIROMENT VARIABLES////////
-export DBDRIVER=mysql
-export DBIPADDRESS=localhost
-export DBPORT=3306
-export DBUSER=root
+export DBDRIVER=mysql \
+export DBIPADDRESS=localhost \
+export DBPORT=3306 \
+export DBUSER=root \
 export DBPASSWORD=root
 
 ///////DOCKER ATTACH//////////////

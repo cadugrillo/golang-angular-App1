@@ -28,7 +28,7 @@ export class AppComponent {
   public signOut(): void {
     this.cognitoService.signOut()
     .then(() => {
-      this.router.navigate(['/signIn']);
+      this.router.navigate(['/signIn']).then(() => {window.location.reload();});
     });
   }
 }

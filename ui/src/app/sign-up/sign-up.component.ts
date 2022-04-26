@@ -34,12 +34,11 @@ export class SignUpComponent {
 
   public confirmSignUp(): void {
     this.loading = true;
-    this.cognitoService.confirmSignUp(this.user)
-    .then(() => {
-      this.router.navigate(['/signIn']);
-    }).catch(() => {
-      this.loading = false;
-    });
+    this.cognitoService.confirmSignUp(this.user).then(() => {
+      this.cognitoService.signIn(this.user).then(() => {
+        this.router.navigate(['/profile']).then(() => {window.location.reload();});
+      });    
+    }).catch(() => { this.loading = false;}); 
   }
 
 }

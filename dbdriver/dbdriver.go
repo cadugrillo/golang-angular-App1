@@ -64,11 +64,11 @@ func InitialiseDB() bool {
 	//myDBinit.Close()
 
 	//mail := "cadugrillo@gmail.com"
-	//mailIdint := strings.Replace(mail, "@", "_", 1)
-	//mailId := strings.Replace(mailIdint, ".", "_", 1)
+	//userIdModint := strings.Replace(mail, "@", "_", 1)
+	//userIdMod := strings.Replace(userIdModint, ".", "_", 1)
 
 	//myDB := dbConn("todo")
-	//addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + mailId + " (ID varchar(36), Message varchar(255), Complete boolean)")
+	//addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + userIdMod + " (ID varchar(36), Message varchar(255), Complete boolean)")
 	//if err != nil {
 	//	panic(err.Error())
 	//}
@@ -84,18 +84,17 @@ func DatabaseGet(userId string) []Todo {
 	var todos []Todo
 	db := dbConn()
 
-	mailIdint := strings.Replace(userId, "@", "_", 1)
-	mailId := strings.Replace(mailIdint, ".", "_", 1)
+	userIdMod := strings.Replace(userId, "-", "_", 4)
 
 	myDB := dbConn()
-	addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + mailId + " (ID varchar(36), Message varchar(255), Complete boolean)")
+	addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + userIdMod + " (ID varchar(46), Message varchar(255), Complete boolean)")
 	if err != nil {
 		panic(err.Error())
 	}
 	addTable.Exec()
-	log.Println("Table " + mailId + " created successfully")
+	log.Println("Table " + userIdMod + " created successfully")
 
-	rows, err := db.Query("SELECT * FROM " + mailId)
+	rows, err := db.Query("SELECT * FROM " + userIdMod)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -115,10 +114,9 @@ func DatabaseAdd(userId string, ID string, Message string, Complete bool) {
 
 	db := dbConn()
 
-	mailIdint := strings.Replace(userId, "@", "_", 1)
-	mailId := strings.Replace(mailIdint, ".", "_", 1)
+	userIdMod := strings.Replace(userId, "-", "_", 4)
 
-	r, err := db.Prepare("INSERT INTO " + mailId + "(ID, Message, Complete) VALUES(?, ?, ?)")
+	r, err := db.Prepare("INSERT INTO " + userIdMod + "(ID, Message, Complete) VALUES(?, ?, ?)")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -131,30 +129,28 @@ func DatabaseComplete(userId string, ID string) {
 
 	db := dbConn()
 
-	mailIdint := strings.Replace(userId, "@", "_", 1)
-	mailId := strings.Replace(mailIdint, ".", "_", 1)
+	userIdMod := strings.Replace(userId, "-", "_", 4)
 
-	r, err := db.Prepare("UPDATE " + mailId + " SET Complete=true WHERE ID=?")
+	r, err := db.Prepare("UPDATE " + userIdMod + " SET Complete=true WHERE ID=?")
 	if err != nil {
 		panic(err.Error())
 	}
 	r.Exec(ID)
 	db.Close()
-	log.Println("Item" + ID + "from " + mailId + " set to completed status")
+	log.Println("Item" + ID + "from " + userIdMod + " set to completed status")
 }
 
 func DatabaseDelete(userId string, ID string) {
 
 	db := dbConn()
 
-	mailIdint := strings.Replace(userId, "@", "_", 1)
-	mailId := strings.Replace(mailIdint, ".", "_", 1)
+	userIdMod := strings.Replace(userId, "-", "_", 4)
 
-	r, err := db.Prepare("DELETE FROM " + mailId + " WHERE ID=?")
+	r, err := db.Prepare("DELETE FROM " + userIdMod + " WHERE ID=?")
 	if err != nil {
 		panic(err.Error())
 	}
 	r.Exec(ID)
 	db.Close()
-	log.Println("Item " + ID + " from " + mailId + " removed successfully")
+	log.Println("Item " + ID + " from " + userIdMod + " removed successfully")
 }
