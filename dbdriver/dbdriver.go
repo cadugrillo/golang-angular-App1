@@ -12,13 +12,14 @@ import (
 
 var (
 	once sync.Once
+	db   *sql.DB
 )
 
 func init() {
-	once.Do(initialiseList)
+	once.Do(initialiseDBconn)
 }
 
-func initialiseList() {
+func initialiseDBconn() {
 
 }
 
@@ -45,49 +46,14 @@ func dbConn() (db *sql.DB) {
 
 }
 
-func InitialiseDB() bool {
-
-	//dbDriver := os.Getenv("DBDRIVER")
-	//if dbDriver == "" {
-	//	log.Println("No DB Driver was found. System will use Default storage method")
-	//	return false
-	//}
-
-	//myDBinit := dbConn("")
-
-	//AddDB, err := myDBinit.Prepare("CREATE DATABASE IF NOT EXISTS todo")
-	//if err != nil {
-	//	panic(err.Error())
-	//}
-	//AddDB.Exec()
-	//log.Println("Database todo created successfully")
-	//myDBinit.Close()
-
-	//mail := "cadugrillo@gmail.com"
-	//userIdModint := strings.Replace(mail, "@", "_", 1)
-	//userIdMod := strings.Replace(userIdModint, ".", "_", 1)
-
-	//myDB := dbConn("todo")
-	//addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + userIdMod + " (ID varchar(36), Message varchar(255), Complete boolean)")
-	//if err != nil {
-	//	panic(err.Error())
-	//}
-	//addTable.Exec()
-	//log.Println("Table todo_items created successfully")
-
-	//myDB.Close()
-
-	return false
-}
-
 func DatabaseGet(userId string) []Todo {
+
 	var todos []Todo
 	db := dbConn()
 
 	userIdMod := strings.Replace(userId, "-", "_", 4)
 
-	myDB := dbConn()
-	addTable, err := myDB.Prepare("CREATE TABLE IF NOT EXISTS " + userIdMod + " (ID varchar(46), Message varchar(255), Complete boolean)")
+	addTable, err := db.Prepare("CREATE TABLE IF NOT EXISTS " + userIdMod + " (ID varchar(46), Message varchar(255), Complete boolean)")
 	if err != nil {
 		panic(err.Error())
 	}
