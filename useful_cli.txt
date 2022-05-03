@@ -17,4 +17,6 @@ export DBPASSWORD=root
 ///////DOCKER ATTACH//////////////
  docker attach --sig-proxy=false  <CONTAINER NAME>
 
- this.cognitoService.getUserEmail().then(console.log)
+///////////CURL/////////////////
+curl localhost:3000/todo
+curl localhost:3000/todo -d '{"message": "finish writing the article"}'
