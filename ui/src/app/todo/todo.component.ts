@@ -20,6 +20,7 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.cognitoService.getUserId().then((userId: string) => {
       this.userId = userId;
+      this.userId = this.userId.replace(/-/g,"");
       this.getAll();
     });
   }
