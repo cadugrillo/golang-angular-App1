@@ -4,7 +4,6 @@ import (
 	"database/sql"
 	"log"
 	"os"
-	"strings"
 	"sync"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -51,16 +50,15 @@ func DatabaseGet(userId string) []Todo {
 	var todos []Todo
 	db := dbConn()
 
-	userIdMod := strings.Replace(userId, "-", "_", 4)
-
-	addTable, err := db.Prepare("CREATE TABLE IF NOT EXISTS " + userIdMod + " (ID varchar(46), Message varchar(255), Complete boolean)")
+	addTable, err := db.Prepare("CREATE TABLE IF NOT EXISTS `" + userId + "` (ID varchar(255), Message varchar(255), Complete boolean)")
 	if err != nil {
 		panic(err.Error())
 	}
 	addTable.Exec()
-	log.Println("Table " + userIdMod + " created successfully")
 
-	rows, err := db.Query("SELECT * FROM " + userIdMod)
+	log.Println("Table " + userId + " created successfully")
+
+	rows, err := db.Query("SELECT * FROM `" + userId + "`")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -80,9 +78,7 @@ func DatabaseAdd(userId string, ID string, Message string, Complete bool) {
 
 	db := dbConn()
 
-	userIdMod := strings.Replace(userId, "-", "_", 4)
-
-	r, err := db.Prepare("INSERT INTO " + userIdMod + "(ID, Message, Complete) VALUES(?, ?, ?)")
+	r, err := db.Prepare("INSERT INTO `" + userId + "` (ID, Message, Complete) VALUES(?, ?, ?)")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -95,28 +91,24 @@ func DatabaseComplete(userId string, ID string) {
 
 	db := dbConn()
 
-	userIdMod := strings.Replace(userId, "-", "_", 4)
-
-	r, err := db.Prepare("UPDATE " + userIdMod + " SET Complete=true WHERE ID=?")
+	r, err := db.Prepare("UPDATE `" + userId + "` SET Complete=true WHERE ID=?")
 	if err != nil {
 		panic(err.Error())
 	}
 	r.Exec(ID)
 	db.Close()
-	log.Println("Item" + ID + "from " + userIdMod + " set to completed status")
+	log.Println("Item" + ID + "from " + userId + " set to completed status")
 }
 
 func DatabaseDelete(userId string, ID string) {
 
 	db := dbConn()
 
-	userIdMod := strings.Replace(userId, "-", "_", 4)
-
-	r, err := db.Prepare("DELETE FROM " + userIdMod + " WHERE ID=?")
+	r, err := db.Prepare("DELETE FROM `" + userId + "` WHERE ID=?")
 	if err != nil {
 		panic(err.Error())
 	}
 	r.Exec(ID)
 	db.Close()
-	log.Println("Item " + ID + " from " + userIdMod + " removed successfully")
+	log.Println("Item " + ID + " from " + userId + " removed successfully")
 }
