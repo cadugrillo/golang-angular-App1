@@ -1,4 +1,5 @@
 <div class="row justify-content-center my-5">
+  <h3 class="row justify-content-center my-5">To-do List - Sign in</h3>
   <div class="col-4">
     <div class="card">
       <div class="card-body">
@@ -12,7 +13,7 @@
           <div class="col mb-2">
             <label for="password" class="form-label">Password:</label>
             <div class="input-group input-group-sm">
-              <input [type]="user.showPassword ? 'text' : 'password'" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" id="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control form-control-sm">
+              <input [type]="user.showPassword ? 'text' : 'password'" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" title="Must contain at least one number, uppercase and lowercase letter, one special character (!@#$%^&*_=+-) and at least 8 or more characters" id="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control form-control-sm">
             </div>
           </div>
         </div>
@@ -25,11 +26,8 @@
           </div>
         </div>
         <div id="message">
-          <h6>Password must contain the following:</h6>
-          <p id="letter" class="valid">A <b>lowercase</b> letter</p>
-          <p id="capital" class="valid">A <b>capital (uppercase)</b> letter</p>
-          <p id="number" class="valid">A <b>number</b></p>
-          <p id="length" class="valid">Minimum <b>8 characters</b></p>
+          <p>Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters.</p>
+          <h6>Don't have an account? Use Sign up option on the top menu to create one.</h6>
         </div>
       </div>
     </div>
