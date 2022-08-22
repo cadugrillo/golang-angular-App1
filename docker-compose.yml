@@ -2,14 +2,14 @@ version: "3.7"
 
 services:
   angular:
-    image: cadugrillo/angular-app1:1.3
+    image: cadugrillo/angular-app1:2.0
     container_name: angular
     restart: always
     ports:
       - 80:80
 
   golang:
-    image: cadugrillo/golang-app1:1.4
+    image: cadugrillo/golang-app1:2.0
     container_name: golang
     restart: always
     environment:
