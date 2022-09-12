@@ -13,6 +13,7 @@ export class TodoComponent implements OnInit {
   completedTodos: Todo[] = [];
   todoMessage!: string;
   userId!: string;
+  displayedColumns: string[] = ['id', 'description', 'actions']
 
   constructor(private todoService: TodoService,
               private cognitoService: CognitoService) { }

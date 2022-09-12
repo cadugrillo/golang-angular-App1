@@ -31,4 +31,8 @@ export class AppComponent {
       this.router.navigate(['/signIn']).then(() => {window.location.reload();});
     });
   }
+
+  openWebPage() {
+    window.open('https://github.com/cadugrillo/golang-angular-App1', '_blank');
+  }
 }

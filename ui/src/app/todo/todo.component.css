@@ -34,3 +34,7 @@ h1 {
   flex-direction: column;
   text-align: center;
 }
+
+table {
+  width: 80%;
+}
