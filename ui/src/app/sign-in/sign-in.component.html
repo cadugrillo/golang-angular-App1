@@ -1,39 +1,34 @@
-<p>ExtraLine</p>
-<p>ExtraLine</p>
-<p>ExtraLine</p>
-<p>ExtraLine</p>
-<div class="row justify-content-center my-5">
-  <h3 class="row justify-content-center my-5">To-do List - Sign in</h3>
-  <div class="col-4">
-    <div class="card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col mb-2">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control form-control-sm">
+<mat-toolbar class="app-toolbar">
+  <span></span>
+</mat-toolbar>
+<div class="Users">
+  <mat-card class="example-card">
+      <mat-card-title-group>
+        <mat-card-title>Log in</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+          <div class="topline">
+              <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Email</mat-label>
+                  <input matInput placeholder="" [(ngModel)]="user.email">
+              </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Password</mat-label>
+                  <input matInput autocomplete="off" type="password" placeholder="" [(ngModel)]="user.password">
+              </mat-form-field>
           </div>
-        </div>
-        <div class="row">
-          <div class="col mb-2">
-            <label for="password" class="form-label">Password:</label>
-            <div class="input-group input-group-sm">
-              <input [type]="user.showPassword ? 'text' : 'password'" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,12}$" title="Must contain at least one number, uppercase and lowercase letter, one special character (!@#$%^&*_=+-) and at least 8 or more characters" id="password" name="password" #password="ngModel" [(ngModel)]="user.password" class="form-control form-control-sm">
-            </div>
+          <div class="middleline">
+            <button mat-raised-button color="primary" (click)="signIn()">Log in</button>
           </div>
-        </div>
-        <div class="row">
-          <div class="col d-grid">
-            <button type="button" (click)="signIn()" class="btn btn-sm btn-success" [disabled]="loading">
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
-              Sign in
-            </button>
+          <div class="bottomline">
           </div>
-        </div>
-        <div id="message">
-          <p>Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters.</p>
-          <h6>Don't have an account? Use Sign up option on the top menu to create one.</h6>
-        </div>
-      </div>
-    </div>
-  </div>
+      </mat-card-content>
+      <mat-card-actions align="end"></mat-card-actions>
+  </mat-card>
+
+    <p>Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters.</p>
+    <h6>Don't have an account? Use Sign up option on the top menu to create one.</h6>
+
 </div>
+
