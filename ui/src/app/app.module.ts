@@ -60,7 +60,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
   ],
   providers: [TodoService, {
     provide: HTTP_INTERCEPTORS,
