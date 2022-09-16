@@ -6,6 +6,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { AuthGuardService } from './auth-guard.service';
+import { MqttClientComponent } from './mqtt-client/mqtt-client.component';
 
 const routes: Routes = [
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'profile',component: ProfileComponent, canActivate: [AuthGuardService]},
   { path: 'home', component: HomeComponent, canActivate: [AuthGuardService] },
   { path: 'todo', component: TodoComponent,canActivate: [AuthGuardService] },
+  { path: 'mqtt-client', component: MqttClientComponent,canActivate: [AuthGuardService] },
   { path: '**', redirectTo: 'signIn'},
  
 

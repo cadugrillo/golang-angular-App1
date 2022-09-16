@@ -5,4 +5,11 @@ export const environment = {
     userPoolId: 'us-east-1_wXNyjVJP4',
     userPoolWebClientId: '3bjl2vgb74537vk0b6r33r7jp4',
   },
+  mqtt: {
+		server: 'apps.cadugrillo.com',
+		protocol: "wss",
+		port: 9884,
+    username: 'cguser05',
+    password: 'cguser05',
+	}
 };

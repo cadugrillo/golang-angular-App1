@@ -1,3 +1,5 @@
+import { IMqttServiceOptions, MqttModule } from "ngx-mqtt";
+import { environment as env } from '../environments/environment';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -33,7 +35,18 @@ import { TodoService } from './todo.service';
 import { FormsModule } from '@angular/forms';
 import { TokenInterceptor } from './token.interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MqttClientService } from "./mqttClient.service";
+import { MqttClientComponent } from './mqtt-client/mqtt-client.component';
 
+const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: env.mqtt.server,
+  port: env.mqtt.port,
+  protocol: (env.mqtt.protocol === "wss") ? "wss" : "ws",
+  queueQoSZero: false,
+  path: '',
+  username: env.mqtt.username,
+  password: env.mqtt.password
+};
 
 @NgModule({
   declarations: [
@@ -44,9 +57,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     SignInComponent,
     SignUpComponent,
     MessagePopupComponent,
-    WaitPopupComponent
+    WaitPopupComponent,
+    MqttClientComponent
   ],
   imports: [
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     AppRoutingModule,
     BrowserModule,
     FormsModule,
@@ -74,7 +89,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     provide: HTTP_INTERCEPTORS,
     useClass: TokenInterceptor,
     multi: true
-  }],
+  }, MqttClientService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
