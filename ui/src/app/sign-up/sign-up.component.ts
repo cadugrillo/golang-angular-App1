@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessagePopupComponent } from '../message-popup/message-popup.component';
+import { WaitPopupComponent } from '../wait-popup/wait-popup.component';
 
 import { IUser, CognitoService } from '../cognito.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,7 +17,7 @@ export class SignUpComponent {
   isConfirm: boolean;
   user: IUser;
 
-  constructor(private router: Router,
+  constructor(private router: Router, public dialog: MatDialog,
               private cognitoService: CognitoService) {
     this.loading = false;
     this.isConfirm = false;
@@ -22,14 +25,18 @@ export class SignUpComponent {
   }
 
   public signUp(): void {
-    this.loading = true;
-    this.cognitoService.signUp(this.user)
-    .then(() => {
-      this.loading = false;
-      this.isConfirm = true;
-    }).catch(() => {
-      this.loading = false;
-    });
+    if (this.user.email != null && this.user.password != null) {
+
+      this.loading = true;
+      this.cognitoService.signUp(this.user)
+      .then(() => {
+        this.loading = false;
+        this.isConfirm = true;
+      }).catch(() => {
+        this.loading = false;
+      });
+      
+    } else this.dialog.open(MessagePopupComponent, {data: {title: "Error", text: "Empty email or password!"}});
   }
 
   public confirmSignUp(): void {

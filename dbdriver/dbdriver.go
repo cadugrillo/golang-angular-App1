@@ -2,6 +2,7 @@ package dbdriver
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"os"
 	"sync"
@@ -40,7 +41,7 @@ func dbConn() (db *sql.DB) {
 	if err != nil {
 		panic(err.Error())
 	}
-	log.Println("SQL connection opened successfully")
+	fmt.Println("SQL connection opened successfully")
 	return db
 
 }

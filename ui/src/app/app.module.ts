@@ -15,10 +15,13 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatListModule} from '@angular/material/list';
 import {MatSelectModule} from '@angular/material/select';
+import { MessagePopupComponent } from './message-popup/message-popup.component';
+import { WaitPopupComponent } from './wait-popup/wait-popup.component';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatTableModule} from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -40,6 +43,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     ProfileComponent,
     SignInComponent,
     SignUpComponent,
+    MessagePopupComponent,
+    WaitPopupComponent
   ],
   imports: [
     AppRoutingModule,
@@ -62,7 +67,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatProgressBarModule,
     MatTableModule,
     MatPaginatorModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatTooltipModule
   ],
   providers: [TodoService, {
     provide: HTTP_INTERCEPTORS,

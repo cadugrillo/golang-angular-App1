@@ -4,7 +4,7 @@
 <div class="Users">
   <mat-card class="example-card">
       <mat-card-title-group>
-        <mat-card-title>Log in</mat-card-title>
+        <mat-card-title>Sign in</mat-card-title>
         <mat-card-subtitle></mat-card-subtitle>
       </mat-card-title-group>
       <mat-card-content>
@@ -15,20 +15,15 @@
               </mat-form-field>
               <mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>Password</mat-label>
-                  <input matInput autocomplete="off" type="password" placeholder="" [(ngModel)]="user.password">
+                  <input matInput autocomplete="off" type="password" placeholder="" [(ngModel)]="user.password" matTooltip="Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters">
               </mat-form-field>
           </div>
           <div class="middleline">
-            <button mat-raised-button color="primary" (click)="signIn()">Log in</button>
-          </div>
-          <div class="bottomline">
+            <button mat-raised-button color="primary" (click)="signIn()">Sign in</button>
+            <h3>Don't have an account? Click <span style="cursor: pointer; color:blue;" (click)="goToSignUp()">here.</span></h3>
           </div>
       </mat-card-content>
       <mat-card-actions align="end"></mat-card-actions>
   </mat-card>
-
-    <p>Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters.</p>
-    <h6>Don't have an account? Use Sign up option on the top menu to create one.</h6>
-
 </div>
 
