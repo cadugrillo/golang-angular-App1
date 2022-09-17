@@ -1,24 +1,37 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { IMqttMessage } from "ngx-mqtt";
 import { MqttClientService } from '../mqttClient.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-mqtt-client',
   templateUrl: './mqtt-client.component.html',
-  styleUrls: ['./mqtt-client.component.css']
+  styleUrls: ['./mqtt-client.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class MqttClientComponent implements OnInit, OnDestroy {
 
-  
-  messages: Messages = {message: []};
-  message: Message = new Message();
+  messages: IMqttMessage[] = []
   subscription!: Subscription;
   topic: string = "#"
+  dataSource!: MatTableDataSource<IMqttMessage>;
+
+  columnsToDisplay = ['Topic', 'Timestamp'];
+  columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
+  expandedElement!: IMqttMessage | null;
 
   constructor(private mqttClientService: MqttClientService) {}
 
   ngOnInit(): void {
+    this.dataSource = new MatTableDataSource();
     this.subscribeToTopic();
   }
 
@@ -28,23 +41,22 @@ export class MqttClientComponent implements OnInit, OnDestroy {
 
   subscribeToTopic() {
     this.subscription = this.mqttClientService.topic(this.topic).subscribe((data: IMqttMessage) => {
-      //this.message.topic = data.topic;
-      //this.message.payload = JSON.parse(data.payload.toString());
-      let item = JSON.parse(data.payload.toString());
-      //this.message.qos = data.qos;
-      //this.messages.message.push(this.message);
-      console.log(item);
+      data.payload = JSON.parse(data.payload.toString());
+      this.messages.push(data);
+      this.dataSource.data = this.messages;
+      console.log(this.messages);
       
     });
   }
-}
+  toString(payload: Object): string {
+    return JSON.stringify(payload, null, 4);
+  }
 
-class Messages {
-  message!: Message[]
-}
-
-class Message {
-  topic!: string;
-  payload!: string;
-  qos!: number;
+  getTimestamp(): string {
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date+' '+time;
+    return dateTime;
+  }
 }
