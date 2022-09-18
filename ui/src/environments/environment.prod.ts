@@ -7,7 +7,7 @@ export const environment = {
   },
   mqtt: {
 		server: 'apps.cadugrillo.com',
-		protocol: "wss",
+		protocol: "ws",
 		port: 9884,
     username: 'cguser05',
     password: 'cguser05',
