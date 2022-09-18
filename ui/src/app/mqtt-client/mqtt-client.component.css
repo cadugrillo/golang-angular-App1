@@ -4,12 +4,38 @@
     margin-top: 64px;
 }
 
+section {
+  display: table;
+  margin-top: 148px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  position: absolute;
+}
+
+.example-button-row {
+  display: table-cell;
+  width: 700px;
+}
+
+.example-button-row .mat-button-base {
+  margin: 8px;
+}
+
+.mat-input {
+  width: 400px;
+  margin-right: 20px;
+}
+
+.table-wrapper {
+  margin-top: 238px;
+  margin-left: 20px;
+  width: 95%;
+  position: absolute;
+ }
+
 table {
-    margin-top: 148px;
-    margin-left: 20px;
-    position: absolute;
-    width: 95%;
-  }
+  width: 100%;
+}
   
   tr.example-detail-row {
     height: 0;
