@@ -20,3 +20,5 @@ export DBPASSWORD=root
 ///////////CURL/////////////////
 curl localhost:3000/todo
 curl localhost:3000/todo -d '{"message": "finish writing the article"}'
+
+*** When compiling from M1 Mac use --platform=linux/amd64 at docker build command ***
