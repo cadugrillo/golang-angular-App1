@@ -5,7 +5,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm install -g @angular/cli
-RUN ng build --prod --base-href=/app1/ --output-path=/dist
+RUN ng build --base-href=/app1/ --output-path=/dist
 
 #stage 2
 FROM nginx:alpine
