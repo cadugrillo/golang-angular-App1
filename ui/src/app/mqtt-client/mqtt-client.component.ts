@@ -57,13 +57,13 @@ export class MqttClientComponent implements OnInit, OnDestroy {
     if (this.topic != '') {
       this.running = true;
       this.subscription = this.mqttClientService.topic(topic).subscribe((data: IMqttMessage) => {
-        console.log('Initial time:'+this.getTimestamp());
+        //console.log('Initial time:'+this.getTimestamp());
         data.payload = JSON.parse(data.payload.toString());
         this.messages.push(data);
         this.recTS.push(this.getTimestamp());
         this.dataSource = new MatTableDataSource(this.messages);
         this.dataSource.paginator = this.paginator;
-        console.log('Final time:'+this.getTimestamp());
+        //console.log('Final time:'+this.getTimestamp());
       });
     } else this.dialog.open(MessagePopupComponent, {data: {title: "Error", text: "Topic field cannot be empty!"}});
   }

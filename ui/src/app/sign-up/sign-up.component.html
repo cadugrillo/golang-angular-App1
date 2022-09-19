@@ -1,51 +1,46 @@
-<div class="row justify-content-center my-5">
-  <h3 class="row justify-content-center my-5">To-do List - Sign up</h3>
-  <div class="col-4">
-    <div class="card">
-      <div class="card-body" *ngIf="!isConfirm">
-        <div class="row">
-          <div class="col mb-2">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" name="email" #email="ngModel" [(ngModel)]="user.email" class="form-control form-control-sm">
+<mat-toolbar class="app-toolbar">
+  <span></span>
+</mat-toolbar>
+<div class="Users">
+  <mat-card class="example-card" *ngIf="!isConfirm">
+      <mat-card-title-group>
+        <mat-card-title>Sign up</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-title-group>
+      <mat-card-content>
+          <div class="topline">
+              <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Enter Valid Email</mat-label>
+                  <input matInput placeholder="" [(ngModel)]="user.email">
+              </mat-form-field>
+              <mat-form-field class="example-full-width" appearance="fill">
+                  <mat-label>Choose Password</mat-label>
+                  <input matInput autocomplete="off" type="password" placeholder="" [(ngModel)]="user.password" matTooltip="Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters">
+              </mat-form-field>
           </div>
-        </div>
-        <div class="row">
-          <div class="col mb-2">
-            <label for="password" class="form-label">Password:</label>
-            <div class="input-group input-group-sm">
-              <input [type]="user.showPassword ? 'text' : 'password'" id="password" name="password" title="Must contain at least one number, uppercase and lowercase letter, one special character (!@#$%^&*_=+-) and at least 8 or more characters" #password="ngModel" [(ngModel)]="user.password" class="form-control form-control-sm">
-            </div>
+          <div class="middleline">
+            <button mat-raised-button color="primary" (click)="signUp()">Sign up</button>
+            <h3>Already have an account? Click <span style="cursor: pointer; color:blue;" (click)="goToSignIn()">here.</span></h3>
           </div>
+      </mat-card-content>
+      <mat-card-actions align="end"></mat-card-actions>
+  </mat-card>
+  <mat-card class="example-card" *ngIf="isConfirm">
+    <mat-card-title-group>
+      <mat-card-title>We sent you an email with a verification code</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-title-group>
+    <mat-card-content>
+        <div class="topline">
+            <mat-form-field class="example-full-width" appearance="fill">
+                <mat-label>Verification Code</mat-label>
+                <input matInput placeholder="" [(ngModel)]="user.code">
+            </mat-form-field>
         </div>
-        <div class="row">
-          <div class="col d-grid">
-            <button type="button" (click)="signUp()" class="btn btn-sm btn-success" [disabled]="loading">
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
-              Sign up
-            </button>
-          </div>
+        <div class="middleline">
+          <button mat-raised-button color="primary" (click)="confirmSignUp()">Confirm Code</button>
         </div>
-        <div id="message">
-          <p>Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters.</p>
-          <h6>Already have an account? Use Sign in option on the top menu to access yours.</h6>
-        </div>
-      </div>
-      <div class="card-body" *ngIf="isConfirm">
-        <div class="row">
-          <div class="col mb-2">
-            <label for="code" class="form-label">We sent you an email with a verification code:</label>
-            <input type="text" id="code" name="code" #code="ngModel" [(ngModel)]="user.code" class="form-control form-control-sm">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col d-grid">
-            <button type="button" (click)="confirmSignUp()" class="btn btn-sm btn-success" [disabled]="loading">
-              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
-              Confirm
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </mat-card-content>
+    <mat-card-actions align="end"></mat-card-actions>
+</mat-card>
 </div>

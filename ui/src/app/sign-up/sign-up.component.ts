@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss'],
+  styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent {
 
@@ -28,12 +28,15 @@ export class SignUpComponent {
     if (this.user.email != null && this.user.password != null) {
 
       this.loading = true;
+      this.dialog.open(WaitPopupComponent, {});
       this.cognitoService.signUp(this.user)
       .then(() => {
         this.loading = false;
+        this.dialog.closeAll();
         this.isConfirm = true;
       }).catch(() => {
         this.loading = false;
+        this.dialog.closeAll();
       });
       
     } else this.dialog.open(MessagePopupComponent, {data: {title: "Error", text: "Empty email or password!"}});
@@ -41,11 +44,19 @@ export class SignUpComponent {
 
   public confirmSignUp(): void {
     this.loading = true;
+    this.dialog.open(WaitPopupComponent, {});
     this.cognitoService.confirmSignUp(this.user).then(() => {
       this.cognitoService.signIn(this.user).then(() => {
         this.router.navigate(['/profile']).then(() => {window.location.reload();});
       });    
-    }).catch(() => { this.loading = false;}); 
+    }).catch(() => { 
+      this.loading = false;
+      this.dialog.closeAll();
+    }); 
+  }
+
+  goToSignIn() {
+    this.router.navigate(['/signIn']);
   }
 
 }

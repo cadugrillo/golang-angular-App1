@@ -69,9 +69,9 @@ spec:
     spec:
       containers:
       - name: angular
-        image: cadugrillo/angular-app1:2.0
+        image: cadugrillo/angular-app1:2.1
         ports:
-        - containerPort: 4300
+        - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
@@ -84,4 +84,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-#  type: LoadBalancer
