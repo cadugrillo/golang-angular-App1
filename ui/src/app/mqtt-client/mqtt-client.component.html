@@ -3,16 +3,21 @@
   </mat-toolbar>
   <section>
     <div class="example-button-row">
-      <mat-form-field class="mat-input" appearance="fill">
+      <mat-form-field class="mat-input" appearance="standard">
         <mat-label>Topic to Subscribe</mat-label>
         <input  matInput autocomplete="off" placeholder="mydevice/mytopic" [disabled]="running" [(ngModel)]="topic">
       </mat-form-field>
       <button mat-raised-button color="primary" [disabled]="running" (click)="subscribeToTopic(topic)">Start</button>
       <button mat-raised-button color="primary" [disabled]="!running" (click)="unsubscribeTopic()">Stop</button>
       <button mat-raised-button color="primary" (click)="clearData()">Clear</button>
+      <button mat-raised-button color="primary" [disabled]="running" (click)="exportMessages()">Export Messages</button>
     </div>
 </section>
 <div class="table-wrapper">
+  <mat-form-field class="mat-filter" appearance="standard">
+    <mat-label>Topic Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. mytopic" #input>
+  </mat-form-field>
   <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
   <ng-container matColumnDef="Topic">
@@ -50,6 +55,12 @@
       (click)="expandedElement = expandedElement === element ? null : element">
   </tr>
   <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+
+  <!-- Row shown when there is no matching data. -->
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+  </tr>
+
 </table>
 <mat-paginator [pageSizeOptions]="[10, 50, 100]"
                     showFirstLastButtons 

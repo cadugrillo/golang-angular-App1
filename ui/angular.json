@@ -37,7 +37,8 @@
               "mqtt-browser",
               "xtend",
               "cookie",
-              "crypto-js/core"
+              "crypto-js/core",
+              "file-saver"
            ],
             "outputPath": "dist/ui",
             "index": "src/index.html",
