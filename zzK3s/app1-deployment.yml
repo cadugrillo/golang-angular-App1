@@ -17,6 +17,7 @@ spec:
       containers:
       - name: golang
         image: cadugrillo/golang-app1:2.0
+        imagePullPolicy: Always
         env:
         - name: DBDRIVER
           value: "mysql"
@@ -70,6 +71,7 @@ spec:
       containers:
       - name: angular
         image: cadugrillo/angular-app1:2.1
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
 ---
