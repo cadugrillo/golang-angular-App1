@@ -15,7 +15,7 @@
               </mat-form-field>
               <mat-form-field class="example-full-width" appearance="fill">
                   <mat-label>Password</mat-label>
-                  <input matInput autocomplete="off" type="password" placeholder="" [(ngModel)]="user.password" matTooltip="Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters">
+                  <input matInput autocomplete="off" (keydown.enter)="signIn()" type="password" placeholder="" [(ngModel)]="user.password" matTooltip="Password must contain one number, upper and lowercase, special character (!@#$%^&*_=+-) and 8 or more characters">
               </mat-form-field>
           </div>
           <div class="middleline">
