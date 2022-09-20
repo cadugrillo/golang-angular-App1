@@ -37,6 +37,7 @@ import { TokenInterceptor } from './token.interceptor';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MqttClientService } from "./mqttClient.service";
 import { MqttClientComponent } from './mqtt-client/mqtt-client.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: env.mqtt.server,
@@ -58,7 +59,8 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     SignUpComponent,
     MessagePopupComponent,
     WaitPopupComponent,
-    MqttClientComponent
+    MqttClientComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
